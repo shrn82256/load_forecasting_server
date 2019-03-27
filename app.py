@@ -31,7 +31,7 @@ def load_list():
 def load_detail_list_latest(device):
     with open(db_folder / (str(device) + ".csv"), 'r') as f:
         for row in reversed(list(csv.reader(f))):
-            return jsonify(row)
+            return jsonify(dict(zip(db_columns, row)))
 
 
 @app.route('/log', methods=['GET'])
