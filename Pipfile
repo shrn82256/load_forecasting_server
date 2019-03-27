@@ -13,6 +13,7 @@ numpy = "*"
 keras = "*"
 sklearn = "*"
 tensorflow = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
