@@ -3,11 +3,7 @@ from flask_cors import CORS
 from datetime import datetime
 from pathlib import Path
 from ml.main import ml_api
-import pandas as pd
-import numpy as np
-import json
 import csv
-import os
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -21,12 +17,6 @@ app.register_blueprint(ml_api)
 @app.route('/')
 def load_list():
     return jsonify("hello")
-
-
-""" def load_detail_list(device):
-    df = pd.read_csv(db_folder / (str(device) + ".csv"),
-                     names=db_columns)
-    return df.to_json(orient='records') """
 
 
 @app.route('/<int:device>/<int:count>')
@@ -78,12 +68,6 @@ def load_entry():
         print(e)
         return jsonify(False)
 
-
-"""
-@app.route('/myth.html')
-def load_detail_list():
-    return render_template('myth.html', the_title='Tiger in Myth and Legend')
- """
 
 if __name__ == '__main__':
     app.run(debug=True)
