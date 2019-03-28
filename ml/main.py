@@ -9,7 +9,7 @@ ml_api = Blueprint('ml_api', __name__)
 def trainModel(device):
     db = "db/{}.csv".format(device)
     if os.path.isfile(db):
-        train.main(device, db, model_architecture="single_lstm")
+        train.main(str(device), str(db), model_architecture="single_lstm")
         return "true"
     else:
         return jsonify(False)
@@ -19,7 +19,7 @@ def trainModel(device):
 def executeModel(device):
     db = "db/{}.csv".format(device)
     if os.path.isfile(db):
-        return jsonify(execute.main(device, db))
+        return jsonify(execute.main(str(device), str(db)))
     else:
         return jsonify(False)
 
@@ -28,6 +28,6 @@ def executeModel(device):
 def testModel(device):
     db = "db/{}.csv".format(device)
     if os.path.isfile(db):
-        return jsonify(test.main(device, db))
+        return jsonify(test.main(str(device), str(db)))
     else:
         return jsonify(False)
