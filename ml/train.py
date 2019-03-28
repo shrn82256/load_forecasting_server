@@ -4,6 +4,7 @@ from keras.layers.core import Dense, Dropout
 from keras.layers.recurrent import LSTM
 from keras.models import Sequential
 from keras.callbacks import LambdaCallback
+from keras import backend as K
 from flask import Blueprint
 from .utils import feature_extraction, split_features
 
@@ -102,3 +103,7 @@ def main(device, dataset, epochs=50, batch_size=1024, validation_split=0.2, mode
 
     # serialize weights to HDF5
     model.save_weights(os.path.join(output_dir, model_prefix + "weights.h5"))
+
+    K.clear_session()
+
+    return True;
