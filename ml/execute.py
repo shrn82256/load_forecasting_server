@@ -30,7 +30,6 @@ def main(device, dataset, model_architecture="double_lstm", model_dir="ml/output
     result = []
     for i in range(5):
         ip = latest_block(features[::-1], window)
-        print(i, ip)
         predicted2 = model.predict(ip)
         result.append(((predicted2 * scaling_parameter) + minima).item(0))
         features = features.append(pd.DataFrame([[1, 1, 1, 1, features.tail(1)[4], predicted2]]))
