@@ -19,7 +19,7 @@ def trainModel(device):
 def executeModel(device):
     db = "db/{}.csv".format(device)
     if os.path.isfile(db):
-        return jsonify(execute.main(str(device), str(db)))
+        return jsonify({"next": execute.main(str(device), str(db))})
     else:
         return jsonify(False)
 
