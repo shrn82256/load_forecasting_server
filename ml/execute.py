@@ -28,7 +28,7 @@ def main(device, dataset, model_architecture="double_lstm", model_dir="ml/output
     model.load_weights(weights_path)
 
     result = []
-    for i in range(4):
+    for i in range(5):
         ip = latest_block(features[::-1], window)
         print(i, ip)
         predicted2 = model.predict(ip)
