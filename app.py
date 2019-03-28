@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from datetime import datetime
 from pathlib import Path
 from ml.main import ml_api
@@ -9,6 +10,8 @@ import csv
 import os
 
 app = Flask(__name__)
+cors = CORS(app)
+
 db_folder = Path("db/")
 db_columns = ['Day', 'Month', 'Year', 'Seconds', 'Temperature', 'Load']
 
@@ -26,8 +29,20 @@ def load_list():
     return df.to_json(orient='records') """
 
 
-@app.route('/<device>')
-@app.route('/<device>/latest')
+@app.route('/<int:device>/<int:count>')
+def load_detail_list_count(device, count):
+    with open(db_folder / (str(device) + ".csv"), 'r') as f:
+        result = []
+        i = 0
+        for row in reversed(list(csv.reader(f))):
+            result.append(dict(zip(db_columns, row)))
+            i += 1
+            if i == count:
+                return jsonify(result)
+
+
+@app.route('/<int:device>')
+@app.route('/<int:device>/latest')
 def load_detail_list_latest(device):
     with open(db_folder / (str(device) + ".csv"), 'r') as f:
         for row in reversed(list(csv.reader(f))):
