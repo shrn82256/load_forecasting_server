@@ -29,9 +29,9 @@ def main(device, dataset, model_architecture="triple_lstm", model_dir="ml/output
     for i in range(5):
         ip = latest_block(features[::-1], window)
         predicted2 = model.predict(ip)
-        print("ip", ip)
+        # print("ip", ip)
         result.append(((predicted2 * scaling_parameter) + minima).item(0))
-        features = features.append(pd.DataFrame([[ip[0][0][0], ip[0][0][1], ip[0][0][2], ip[0][0][3], ip[0][0][4], predicted2[0][0]]]))
+        features = features.append(pd.DataFrame([[ip[0][0][0], ip[0][0][1], predicted2[0][0]]]))
 
     K.clear_session()
 
