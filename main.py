@@ -12,7 +12,7 @@ cors = CORS(app)
 db_folder = Path("db/")
 db_columns = ['Timestamp', 'Temperature', 'Load']
 
-app.register_blueprint(ml_api)
+app.register_blueprint(ml_api, url_prefix='/ml')
 
 
 @app.route('/')

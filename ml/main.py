@@ -9,7 +9,7 @@ ml_api = Blueprint('ml_api', __name__)
 model_architecture = "double_lstm"
 
 
-@ml_api.route("/ml/train/<string:device>")
+@ml_api.route("/train/<string:device>")
 def train_model(device):
     try:
         db = get_db(device)
@@ -21,7 +21,7 @@ def train_model(device):
         return jsonify(exception_as_dict(e))
 
 
-@ml_api.route("/ml/exec/<string:device>")
+@ml_api.route("/exec/<string:device>")
 def execute_model(device):
     try:
         db = get_db(device)
@@ -33,7 +33,7 @@ def execute_model(device):
         return jsonify(exception_as_dict(e))
 
 
-@ml_api.route("/ml/test/<string:device>")
+@ml_api.route("/test/<string:device>")
 def test_model(device):
     try:
         db = get_db(device)
