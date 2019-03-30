@@ -1,16 +1,14 @@
 import os
 import glob
-import json
-import numpy as np
 import pandas as pd
 from keras.models import model_from_json
 from keras import backend as K
 from .utils import feature_extraction, latest_block
 
 
-def main(device, dataset, model_architecture="double_lstm", model_dir="ml/outputs"):
-    features, minima, maxima, scaling_parameter = feature_extraction(dataset)
+def main(device, dataset, model_architecture="triple_lstm", model_dir="ml/outputs"):
     window = 5
+    features, minima, maxima, scaling_parameter = feature_extraction(dataset)
 
     model_prefix = device + "-" + model_architecture + "-model-"
 
@@ -31,8 +29,9 @@ def main(device, dataset, model_architecture="double_lstm", model_dir="ml/output
     for i in range(5):
         ip = latest_block(features[::-1], window)
         predicted2 = model.predict(ip)
+        print("ip", ip)
         result.append(((predicted2 * scaling_parameter) + minima).item(0))
-        features = features.append(pd.DataFrame([[1, 1, 1, 1, features.tail(1)[4], predicted2]]))
+        features = features.append(pd.DataFrame([[ip[0][0][0], ip[0][0][1], ip[0][0][2], ip[0][0][3], ip[0][0][4], predicted2[0][0]]]))
 
     K.clear_session()
 

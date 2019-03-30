@@ -1,12 +1,10 @@
 import os
 import glob
-import json
 import numpy as np
 from math import sqrt
 from keras.models import model_from_json
 from keras import backend as K
 from sklearn.metrics import mean_absolute_error
-import argparse
 from .utils import feature_extraction, split_features
 
 
@@ -15,9 +13,9 @@ def mean_absolute_percentage_error(y_true, y_pred):
     return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
 
 
-def main(device, dataset, model_architecture="double_lstm", model_dir="ml/outputs"):
-    features, minima, maxima, scaling_parameter = feature_extraction(dataset)
+def main(device, dataset, model_architecture="triple_lstm", model_dir="ml/outputs"):
     window = 5
+    features, minima, maxima, scaling_parameter = feature_extraction(dataset)
     X_train, y_train, X_test, y_test = split_features(features[::-1], window)
 
     model_prefix = device + "-" + model_architecture + "-model-"

@@ -1,5 +1,3 @@
-import os
-import glob
 import pandas as pd
 import numpy as np
 
@@ -18,7 +16,7 @@ def feature_extraction(dataset):
     maxima = np.amax(values[:, -1])
     scaling_parameter = maxima - minima
 
-    for i in range(6):
+    for i in range(3):
         values[:, i] = (values[:, i] - np.amin(values[:, i])) / \
             (np.amax(values[:, i]) - np.amin(values[:, i]))
 
@@ -49,7 +47,9 @@ def split_features(features_data_frame, seq_len):
 
 
 def latest_block(features_data_frame, seq_len):
+    amount_of_features = len(features_data_frame.columns)
     data = features_data_frame.as_matrix()
     sequence_length = seq_len + 1
     result = [data[:sequence_length]]
-    return np.array(result)[:, :-1]
+    block = np.array(result)[:, :-1]
+    return np.reshape(block, (block.shape[0], block.shape[1], amount_of_features))
